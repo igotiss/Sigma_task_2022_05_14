@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://unpkg.com/vue@3"></script>
+
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+<head>
+    <meta charset="UTF-8">
+    <title>Task 02</title>
+    <style>
+        .done { text-decoration: line-through; }
+    </style>
+</head>
+<body>
+    <div id="app" class="container pt-4">
+        <h1 class="text-center"> Працівники компанії</h1>
+
+        <table class="table ">
+            <tr class="table-dark">
+                <th scope="col">N п п </th>
+                <th scope="col"> ПІБ</th>
+                <th scope="col">Телефон</th>
+                <th scope="col">Відділ</th>
+                <th scope="col">#</th>
+            </tr>
+
+            <tr v-if="empl.length"
+                :key="employ.id"
+                v-for="(employ, index) in empl">
+                <td>{{index+1}}</td>
+                <td>{{employ.pib}}</td>
+                <td>{{employ.phone}}</td>
+                <td>{{employ.viddil}}</td>
+                <td><button class="btn btn-danger" @click="removeEmpl(employ)">Видалити</button></td>
+            </tr>
+            <tr v-else >
+
+                <td colspan="5" >немає жодного запису, додайте працівника</td>
+
+            </tr>
+
+        </table>
+
+        <hr>
+        <div class="">
+            <button class="btn btn-outline-success" @click="showOn"> Додати працівника </button>
+        </div>
+
+        <form @submit.prevent="addEmpl"
+              v-show="showForm"
+              class="col-6 mt-3 "
+        >
+            <div class="mb-3">
+                <input
+                        v-model="newPib"
+                        class="form-control"
+                        placeholder="Прізвище І.П."
+                        required/>
+            </div>
+            <div class="mb-3">
+                <input
+                        v-model="newPhone"
+                        class="form-control"
+                        placeholder="Телефон"
+                        required/>
+            </div>
+
+            <div class="mb-3">
+                <input
+                        v-model="newViddil"
+                        class="form-control"
+                        placeholder="Відділ"
+                        required/>
+            </div>
+
+            <div class="">
+                <button class="btn btn-primary" type="submit">Додати в таблицю</button>
+            </div>
+        </form>
+
+        <div  v-if="errors.length"   role="alert" class="mt-2">
+            Будь-ласка виправте вказані помилки:
+            <ul  class="alert alert-danger" role="alert">
+                <li style="list-style-type: none" v-for="error in errors">{{ error }} </li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="vue.js"></script>
+</body>
+</html>

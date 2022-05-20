@@ -23,6 +23,8 @@
       :activePage="activePage"
       :favoritesProducts = "favoritesProducts"
   />
+  <button class="btn btn-danger" @click="loadProducts"> Load</button>
+
 </template>
 
 <script>
@@ -31,6 +33,7 @@ import HeaderPart from './components/HeaderPart.vue'
 import ProductsCatalog from "@/components/ProductsCatalog";
 import ProductsCart from "@/components/ProductsCart";
 import ProductsFavorites from "@/components/ProductsFavorites";
+import axios from 'axios';
 
 let id = 0;
 export default {
@@ -69,7 +72,44 @@ export default {
     },
     setFavorite (id) {
       this.products[id].favorite = !this.products[id].favorite
-    }
+    },
+     async loadProducts() {
+
+      /** first way */
+
+       /*
+       const mysql = require('mysql');
+       const con = await mysql.createConnection({
+         host     : 'localhost:3306',
+         user     : 'root',
+         password : '',
+         database : 'sigma005'
+       });
+       con.connect(function(err) {
+         if (err) throw err;
+         //Select all products and return the result object:
+         con.query("SELECT * FROM products", function (err, result) {
+           if (err) throw err;
+           this.products = (result);
+         });
+       });
+       */
+
+       /** second way */
+
+
+       const {data} = await axios.get('../php/ajaxfile.php')
+       this.products = Object.keys(data).map(key => {
+         return {
+           id: key,
+           ...data[key]
+         }
+       })
+
+     }
+  },
+  mounted() {
+    this.loadProducts()
   },
   computed: {
     countOrdered() {

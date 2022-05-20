@@ -2,7 +2,7 @@
   <nav>
     <router-link to="/">Каталог</router-link> |
     <router-link to="/about">Обране</router-link> |
-    <router-link to="/cart" class="btn btn-danger">Кошик</router-link>
+    <router-link to="/cart" class="btn btn-warning">Кошик <span class="badge bg-danger" v-if="itemsCount">{{itemsCount}}</span></router-link>
   </nav>
   <router-view/>
 </template>
@@ -29,3 +29,18 @@ nav a.router-link-exact-active {
   color: #42b983;
 }
 </style>
+
+<script>
+export default {
+  name: "App",
+
+  data () {
+    return {
+      itemsCount: 1,
+    }
+  },
+  methods: {
+
+  }
+}
+</script>
